@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Rsponse;
-
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 
 class ApiAuthController extends Controller
@@ -26,6 +24,7 @@ class ApiAuthController extends Controller
             ], 401);
         endif;
 
+        // check if user has verified ttheir email address
         if ($user->hasVerifiedEmail()) {
 
             $token = $user->createToken('ItApiAccessToken');
