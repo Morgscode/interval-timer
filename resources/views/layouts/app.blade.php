@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Laravel') }} - The Interval timer for humans</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -22,11 +23,18 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+            @auth 
+                @include('layouts.navigation')
+            @endauth
+
+            @guest
+                @include('components.application-guest-header')
+            @endguest
             <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
         </div>
+        @include('components.application-footer')
     </body>
 </html>

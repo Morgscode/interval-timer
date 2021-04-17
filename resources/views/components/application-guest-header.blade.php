@@ -1,4 +1,4 @@
-<header class="bg-gray-100 p-6 left-0 w-full">
+<header class="bg-white p-6 left-0 w-full">
     <div class="w-full flex">
         @include('components.application-logo')
         <nav class="flex ml-auto">

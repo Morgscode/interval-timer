@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
 
 
     <article class="w-full bg-blue-100 text-center p-6">
@@ -11,7 +11,7 @@
     </article>
     <article class="w-full bg-blue-200 text-center p-6">
         <div class="mx-auto pt-6 pb-6 w-full lg:w-9/12">
-            <h2 class="text-3xl mb-6">1: Create your own custom intervals to suit your training session</h2>
+            <h2 class="text-3xl mb-6">1: Create your own custom interval timers around your personal training methods</h2>
             <p class="mb-6 text-xl">Blink lets you be your own coach. Define custom interval training sessions specific to you. Take control of the timed work period, optional rest periods and the amount of sets you want this interval to repeat for.</p>
             <a class="inline-block px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 ml-3" href="/register">Register</a>
         </div>
@@ -25,4 +25,4 @@
     </article>
 
 
-</x-layout>
+</x-app-layout>
