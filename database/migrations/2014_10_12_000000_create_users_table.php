@@ -22,9 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('gender')->nullable();
             $table->date('birth_date')->nullable();
             $table->integer('age')->nullable();
-            $table->integer('height')->nullable();
-            $table->integer('starting_weigth')->nullable();
-            $table->integer('current_weight')->nullable();
+            $table->float('height')->nullable();
+            $table->float('weigth')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

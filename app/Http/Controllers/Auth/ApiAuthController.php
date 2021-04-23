@@ -39,7 +39,7 @@ class ApiAuthController extends Controller
             return [
                 'status' => 'Not Authorized',
                 'status_code' => 401,
-                'message' => 'Please verify your email address before ussing this service'
+                'message' => 'Please verify your email address before using this service'
             ];
         }
     }

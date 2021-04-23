@@ -30,7 +30,7 @@ Route::get('/', function() {
     return 'welcome to the spa!';
 });
 
-Route::post('/users', [UserController::class, 'create']);
+Route::post('/users', [UserController::class, 'store']);
 
 Route::post('/login', [ApiAuthController::class, 'login']);
 

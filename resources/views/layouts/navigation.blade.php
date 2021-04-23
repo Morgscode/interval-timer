@@ -1,12 +1,12 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 p-6 left-0 w-full">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 p-3 md:p-6 left-0 w-full">
     <!-- Primary Navigation Menu -->
-    <div class="mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto px-0 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
+                <div class="flex">
                     <a href="{{ route('dashboard') }}">
-                        <div class="flex-shrink-0">
+                        <div>
                             @include('components.application-logo')
                         </div>
                     </a>
