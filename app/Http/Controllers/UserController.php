@@ -8,6 +8,11 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+
+    public function __construct(User $user_model)
+    {
+        $this->user_model = $user_model;
+    }
     /**
      * 
      * This is used to create users via the api, 
@@ -17,7 +22,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $new_user = $this->validateNewUser($request);
+        $new_user = $this->user_model->validateNewUser($request);
         
         $user = User::create([
             'email' => $new_user['email'],
@@ -37,14 +42,7 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        $updated_user = $request->validate([
-            'name' => 'nullable|string|max:50',
-            'email' => 'nullable|string|unique:users|email',
-            'gender' => 'nullable|string|max:6',
-            'birth_date' => 'nullable|date',
-            'height' => 'nullable|numeric|max:500',
-            'weight' => 'nullable|numeric|max:750'
-        ]);
+        $updated_user = $this->user_model->validateUpdatedUser($request);
         
         $user = auth()->user();
 
@@ -61,15 +59,5 @@ class UserController extends Controller
         } else {
             return $saved_user_profile;
         }
-    }
-
-    public function validateNewUser(Request $request)
-    {
-        $valid_user = $request->validate([
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|confirmed|min:8',
-        ]);
-
-        return $valid_user;
     }
 }

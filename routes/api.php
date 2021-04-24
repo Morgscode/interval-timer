@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\ApiAuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\IntervalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,5 +45,7 @@ Route::post('/login', [ApiAuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group( function () {
 
     Route::Post('/logout', [ApiAuthController::class, 'logout']);
+
+    Route::Post('/users/{id}/intervals', [IntervalController::class, 'store']);
 
 });

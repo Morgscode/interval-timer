@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Http\Request;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasApiTokens;
@@ -50,4 +52,25 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function validateNewUser(Request $request)
+    {
+        return $request->validate([
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|confirmed|min:8',
+        ]);
+    }
+
+    public function validateUpdatedUser(Request $request)
+    {
+        return $request->validate([
+            'name' => 'nullable|string|max:50',
+            'email' => 'nullable|string|unique:users|email',
+            'gender' => 'nullable|string|max:6',
+            'birth_date' => 'nullable|date',
+            'height' => 'nullable|numeric|max:500',
+            'weight' => 'nullable|numeric|max:750'
+        ]);
+    }
 }
