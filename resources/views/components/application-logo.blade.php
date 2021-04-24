@@ -1,3 +1,3 @@
 <div class="branding">
-     <p class="text-5xl">Blink - Interval Timer</p>
+     <p class="text-4xl md:text-5-xl">Blink - Interval Timer</p>
 </div>

@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->date('birth_date')->nullable();
             $table->integer('age')->nullable();
             $table->float('height')->nullable();
-            $table->float('weigth')->nullable();
+            $table->float('weight')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

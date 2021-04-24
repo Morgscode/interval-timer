@@ -4,18 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-
 use App\Models\User;
 
 class UserController extends Controller
 {
+    /**
+     * 
+     * This is used to create users via the api, 
+     * for web auth - see:
+     * App/Http/Controllers/Auth/RegisteredUserController.php
+     * 
+     */
     public function store(Request $request)
     {
-        $valid_user = $this->validateNewUser($request);
+        $new_user = $this->validateNewUser($request);
         
         $user = User::create([
-            'email' => $valid_user['email'],
-            'password' => bcrypt($valid_user['password'])
+            'email' => $new_user['email'],
+            'password' => bcrypt($new_user['password'])
         ]);
 
         $user->sendEmailVerificationNotification();
@@ -32,26 +38,26 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $updated_user = $request->validate([
-            'name' => 'nullable|max:50',
-            'email' => 'nullable|unique:users|email',
-            'gender' => 'nullable|max:5',
-            'birth_date' => 'nullable',
-            'height' => 'nullable|max:300',
-            'weight' => 'nullable'
+            'name' => 'nullable|string|max:50',
+            'email' => 'nullable|string|unique:users|email',
+            'gender' => 'nullable|string|max:6',
+            'birth_date' => 'nullable|date',
+            'height' => 'nullable|numeric|max:500',
+            'weight' => 'nullable|numeric|max:750'
         ]);
         
         $user = auth()->user();
 
-        if (is_null($updated_user['email'])) {
+        if ( is_null( $updated_user['email'] ) ) {
             $updated_user['email'] = $user->email;
         }
 
-        $saved_user_profile = User::where('id', $user->id)->update(
+        $saved_user_profile = User::where( 'id' , $user->id )->update(
             $updated_user
         );
 
         if ( ! $request->expectsJson() ) {
-            return view('dashboard', ['user' => $saved_user_profile]);
+            return redirect()->route('dashboard', ['user' => $user]);
         } else {
             return $saved_user_profile;
         }
