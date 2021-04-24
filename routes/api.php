@@ -46,6 +46,8 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::Post('/logout', [ApiAuthController::class, 'logout']);
 
-    Route::Post('/users/{id}/intervals', [IntervalController::class, 'store']);
-
+    Route::middleware('check.user')->group( function () {
+        Route::Post('/users/{id}/intervals', [IntervalController::class, 'store']);
+    });
+    
 });
