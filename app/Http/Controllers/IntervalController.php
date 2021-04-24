@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Interval;
 use App\Models\User;
-use Illuminate\Support\Facades\Redis;
+
 
 class IntervalController extends Controller
 {
@@ -28,18 +28,24 @@ class IntervalController extends Controller
 
     public function store(Request $request, int $user)
     {
-        $this->interval_model->validateNewInterval($request);
+        $this->interval_model->validateIntervalData($request);
 
         $interval = Interval::create(
-            $this->interval_model->prepareNewInterval($request, $user)
+            $this->interval_model->prepareIntervalDataForDB($request, $user)
         );
 
         return $interval;
     }
 
-    public function update(Request $request, int $user_ud, int $interval_id)
+    public function update(Request $request, int $user_id, int $interval_id)
     {
-        
+        $this->interval_model->validateIntervalData($request);
+
+        $interval = Interval::where('id', $interval_id)->update(
+            $this->interval_model->prepareIntervalDataForDB($request, $user_id)
+        );
+
+        return $interval;
     }
 
     public function destroy(Request $request, int $user_id, int $interval_id)

@@ -34,7 +34,7 @@ class Interval extends Model
         return strtolower( preg_replace( '/[^a-zA-Z0-9]/', '-', $name) );
     }
 
-    public function validateNewInterval(Request $request)
+    public function validateIntervalData(Request $request)
     {
         return $request->validate([
             'name' => 'required|string|min:1|max:50',
@@ -44,7 +44,7 @@ class Interval extends Model
         ]);
     }
 
-    public function prepareNewInterval(Request $request, int $user_id)
+    public function prepareIntervalDataForDB(Request $request, int $user_id)
     {
         return array(
             'user_id' => $user_id,
@@ -55,5 +55,4 @@ class Interval extends Model
             'repeat' => $request->input('repeat')
         );
     }
-
 }
