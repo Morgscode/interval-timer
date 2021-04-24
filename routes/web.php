@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
+
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +20,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group( function () {
+
+    Route::get('/dashboard', function (Request $request) {
+        $user = auth()->user();
+        return view('dashboard', ['user' => $user]);
+    })->name('dashboard');
+    
+    Route::put('/users/{id}', [UserController::class, 'update']);
+
+});
 
 require __DIR__.'/auth.php';

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\ApiAuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\IntervalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +22,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/**
+ * 
+ * for testing the connection - dev only
+ * 
+ */
 Route::get('/', function() {
     return 'welcome to the spa!';
 });
 
-Route::post('/users', [UserController::class, 'create']);
+Route::post('/users', [UserController::class, 'store']);
 
 Route::post('/login', [ApiAuthController::class, 'login']);
 
@@ -40,4 +46,8 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::Post('/logout', [ApiAuthController::class, 'logout']);
 
+    Route::middleware('check.user')->group( function () {
+        Route::Post('/users/{id}/intervals', [IntervalController::class, 'store']);
+    });
+    
 });

@@ -8,13 +8,25 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function create(Request $request)
+
+    public function __construct(User $user_model)
     {
-        $valid_user = $this->validateNewUser($request);
+        $this->user_model = $user_model;
+    }
+    /**
+     * 
+     * This is used to create users via the api, 
+     * for web auth - see:
+     * App/Http/Controllers/Auth/RegisteredUserController.php
+     * 
+     */
+    public function store(Request $request)
+    {
+        $new_user = $this->user_model->validateNewUser($request);
         
         $user = User::create([
-            'email' => $valid_user['email'],
-            'password' => bcrypt($valid_user['password'])
+            'email' => $new_user['email'],
+            'password' => bcrypt($new_user['password'])
         ]);
 
         $user->sendEmailVerificationNotification();
@@ -28,13 +40,24 @@ class UserController extends Controller
         return response($response, 201);
     }
 
-    public function validateNewUser(Request $request)
+    public function update(Request $request)
     {
-        $valid_user = $request->validate([
-            'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|confirmed'
-        ]);
+        $updated_user = $this->user_model->validateUpdatedUser($request);
+        
+        $user = auth()->user();
 
-        return $valid_user;
+        if ( is_null( $updated_user['email'] ) ) {
+            $updated_user['email'] = $user->email;
+        }
+
+        $saved_user_profile = User::where( 'id' , $user->id )->update(
+            $updated_user
+        );
+
+        if ( ! $request->expectsJson() ) {
+            return redirect()->route('dashboard', ['user' => $user]);
+        } else {
+            return $saved_user_profile;
+        }
     }
 }
