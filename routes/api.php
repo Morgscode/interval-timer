@@ -18,10 +18,6 @@ use App\Http\Controllers\IntervalController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 /**
  * 
  * for testing the connection - dev only
@@ -44,10 +40,25 @@ Route::post('/login', [ApiAuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group( function () {
 
-    Route::Post('/logout', [ApiAuthController::class, 'logout']);
+    Route::post('/logout', [ApiAuthController::class, 'logout']);
+
+    /**
+     * 
+     * There routes will assess that user id
+     * given in the path matches the current
+     * user making the request
+     * 
+     */
 
     Route::middleware('check.user')->group( function () {
-        Route::Post('/users/{id}/intervals', [IntervalController::class, 'store']);
+
+        Route::get('/users/{user}/intervals', [IntervalController::class, 'index']);
+        Route::post('/users/{user}/intervals', [IntervalController::class, 'store']);
+
+        Route::get('/users/{user}/intervals/{interval}',[IntervalController::class, 'show']);
+        Route::put('/users/{user}/intervals/{interval}', [IntervalController::class, 'update']);
+        Route::delete('users/{user}/intervals/{interval}', [IntervalController::class, 'destroy']);
+
     });
-    
+
 });

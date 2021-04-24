@@ -24,6 +24,11 @@ class Interval extends Model
         'id'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function prepareIntervalSlug(string $name)
     {
         return strtolower( preg_replace( '/[^a-zA-Z0-9]/', '-', $name) );
