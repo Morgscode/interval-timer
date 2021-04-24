@@ -20,8 +20,8 @@ class CheckUserAgainstToken
     {
         try {
 
-            if ( (int) $request->id  !== request()->user()->id ) {
-                throw new Exception("forbidden - you can only modify records with your id", 401);
+            if ( (int) $request->user  !== request()->user()->id ) {
+                throw new Exception("forbidden - you cannot access/modify those resources", 401);
             }
 
             return $next($request);

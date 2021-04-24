@@ -24,8 +24,10 @@ class CreateUsersTable extends Migration
             $table->integer('age')->nullable();
             $table->float('height')->nullable();
             $table->float('weight')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -36,6 +38,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('users', function (BluePrint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }
