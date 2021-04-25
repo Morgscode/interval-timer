@@ -60,7 +60,9 @@ class IntervalController extends Controller
     {
         $this->interval_model->validateIntervalData($request);
 
-        $interval = Interval::where('id', $interval_id)->update(
+        $interval = Interval::where('id', $interval_id)->firstOrFail();
+
+        $interval->update(
             $this->interval_model->prepareIntervalDataForDB($request, $user_id)
         );
 
@@ -79,9 +81,7 @@ class IntervalController extends Controller
 
        return [
            'status' => 'success',
-           'data' => [
-               'message' => 'interval ' . $interval_id . ' deleted'
-                ]
-           ];
+           'data' => null
+       ];
     }
 }
