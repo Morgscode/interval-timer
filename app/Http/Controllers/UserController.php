@@ -32,9 +32,11 @@ class UserController extends Controller
         $user->sendEmailVerificationNotification();
 
         $response = [
-            'status' => 'success - user created',
-            'status_code' => 201,
-            'message' => 'You\'ve been sent an email to verify your email address. you\'ll need to verify your email address to use this service'
+            'status' => 'success',
+            'data' => [
+                'status_code' => 201,
+                'message' => 'You\'ve been sent an email to verify your email address. you\'ll need to verify your email address to use this service',
+            ]
         ];
 
         return response($response, 201);
@@ -57,7 +59,12 @@ class UserController extends Controller
         if ( ! $request->expectsJson() ) {
             return redirect()->route('dashboard', ['user' => $user]);
         } else {
-            return $saved_user_profile;
+            return [
+                'status' => 'success',
+                'data' => [
+                    'user' => $saved_user_profile
+                ]
+                ];
         }
     }
 }
