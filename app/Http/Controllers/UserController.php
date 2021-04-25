@@ -73,7 +73,7 @@ class UserController extends Controller
                 'status' => 'success',
                 'data' => [
                     'user' => $saved_user_profile
-                ]
+                    ]
                 ];
         }
     }
