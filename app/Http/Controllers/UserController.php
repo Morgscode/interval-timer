@@ -42,6 +42,16 @@ class UserController extends Controller
         return response($response, 201);
     }
 
+    public function show(User $user)
+    {
+        return [
+            'status' => 'success',
+            'data' => [
+                'user' => $user
+                ]
+            ];
+    }
+
     public function update(Request $request)
     {
         $updated_user = $this->user_model->validateUpdatedUser($request);

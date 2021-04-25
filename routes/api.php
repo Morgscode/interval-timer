@@ -39,6 +39,8 @@ Route::post('/login', [ApiAuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group( function () {
 
+    Route::get('/users/{user}', [UserController::class, 'show']);
+
     Route::post('/logout', [ApiAuthController::class, 'logout']);
 
     /**
@@ -48,9 +50,10 @@ Route::middleware('auth:sanctum')->group( function () {
      * user making the request
      * 
      */
-
+    
     Route::middleware('check.user')->group( function () {
 
+       
         Route::get('/users/{user}/intervals', [IntervalController::class, 'index']);
         Route::post('/users/{user}/intervals', [IntervalController::class, 'store']);
 
