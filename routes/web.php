@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfilePhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +27,10 @@ Route::middleware(['auth', 'verified'])->group( function () {
         $user = auth()->user();
         return view('dashboard', ['user' => $user]);
     })->name('dashboard');
-    
-    Route::put('/users/{id}', [UserController::class, 'update']);
 
+    Route::put('/users/{id}', [UserController::class, 'update']);
+    Route::put('/users/{user}/images', [ProfilePhotoController::class, 'update']);
+    
 });
 
 require __DIR__.'/auth.php';

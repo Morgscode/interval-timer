@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->integer('age')->nullable();
             $table->float('height')->nullable();
             $table->float('weight')->nullable();
+            $table->string('status')->nullable();
+            $table->string('profile_picture')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

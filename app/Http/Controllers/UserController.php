@@ -38,18 +38,21 @@ class UserController extends Controller
                 'message' => 'You\'ve been sent an email to verify your email address. you\'ll need to verify your email address to use this service',
             ]
         ];
-
         return response($response, 201);
     }
 
-    public function show(User $user)
+    public function show(User $user, Request $request)
     {
-        return [
-            'status' => 'success',
-            'data' => [
-                'user' => $user
-                ]
-            ];
+        if ( ! $request->expectsJson() ) {
+            return redirect()->route('dashboard', ['user' => $user]);
+        } else {
+            return [
+                'status' => 'success',
+                'data' => [
+                    'user' => $user
+                    ]
+                ];
+        }
     }
 
     public function update(Request $request)
@@ -68,7 +71,9 @@ class UserController extends Controller
 
         if ( ! $request->expectsJson() ) {
             return redirect()->route('dashboard', ['user' => $user]);
+
         } else {
+            
             return [
                 'status' => 'success',
                 'data' => [
