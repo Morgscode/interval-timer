@@ -1,13 +1,13 @@
 <section class="user-profile">
     <header class="brounded shadow-lg bg-white shadow-sm sm:rounded-lg flex flex-col md:flex-row md:items-center p-3 md:p-6 mb-6">
-        <div class="profile-photo--wrapper w-full md:w-1/3 mb-3 md:mb-0 flex flex-col justify-center items-center">
+        <div class="profile-photo--wrapper w-full md:w-1/2 mb-3 md:mb-0 flex flex-col justify-center items-center">
             @if ( $user->profile_picture )
-                <img src="{{ asset( 'storage/'.$user->profile_picture ) }}" class="w-full" />
+                <img src="{{ asset( 'storage/'.$user->profile_picture ) }}" class="w-full md:w-2/3 brounded shadow-lg shadow-sm" />
             @else 
                 <img src="{{ asset('/assets/img/user.svg') }}" class="w-1/2 mb-3" />
             @endif
         </div>
-        <h1 class="text-4xl text-center w-full md:w-2/3">Welcome back{{ $user->name ? ' '.$user->name : '!' }}</h1>
+        <h1 class="text-4xl w-full md:w-1/2">Welcome back{{ $user->name ? ' '.$user->name : '!' }}</h1>
     </header>
     <article class="mb-6">
         <h1 class="text-3xl mb-6 text-gray-500">Update your user profile</h1>

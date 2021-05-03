@@ -27,12 +27,22 @@ class ProfilePhotoController extends Controller
             $user->save();
         }
 
-        // lets find out how big our image is
+        // lets find out how big our profile image is
         $image_size = getimagesize($request->profile_picture);
 
-        if ($image_size[0] > 850 || $image_size[1] > 850) {
-            $errors['profile_picture'] = 'Please ensure your picture no larger than 850px in height or width';
+        // if its larger than 450px in x or y, let's return an appropriate error
+        if ($image_size[0] > 450 || $image_size[1] > 450 && ! $request->expectsJson() ) {
+            
+            $errors['profile_picture'] = 'Please ensure your picture no larger than 450px in height or width';
             return redirect()->route('dashboard')->withErrors($errors);
+
+        } else if ( $image_size[0] > 450 || $image_size[1] > 450 &&  $request->expectsJson() ) {
+
+            return [
+                'status' => 'failed',
+                'message' => 'Please ensure your picture no larger than 450px in height or width'
+            ];
+
         }
  
         $path = $request->file('profile_picture')->store('profile-pictures', 'public');
