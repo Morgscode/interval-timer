@@ -28,9 +28,13 @@ class IntervalController extends Controller
             ];
     }
 
-    public function show(Request $request, int $user_id, int $interval_id)
+    public function store(Request $request, int $user)
     {
-        $interval = Interval::where('id', $interval_id)->firstOrFail();
+        $this->interval_model->validateIntervalData($request);
+
+        $interval = Interval::create(
+            $this->interval_model->prepareIntervalDataForDB($request, $user)
+        );
 
         return [
             'status' => 'success',
@@ -40,13 +44,9 @@ class IntervalController extends Controller
             ];
     }
 
-    public function store(Request $request, int $user)
+    public function show(Request $request, int $user_id, int $interval_id)
     {
-        $this->interval_model->validateIntervalData($request);
-
-        $interval = Interval::create(
-            $this->interval_model->prepareIntervalDataForDB($request, $user)
-        );
+        $interval = Interval::where('id', $interval_id)->firstOrFail();
 
         return [
             'status' => 'success',

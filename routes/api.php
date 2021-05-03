@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfilePhotoController;
 use App\Http\Controllers\Auth\ApiAuthController;
 use App\Http\Controllers\IntervalController;
+use App\Http\Controllers\SessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +21,9 @@ use App\Http\Controllers\IntervalController;
 
 /**
  * 
- * for testing the connection - dev only
+ * Guest routes for unregistered users
  * 
  */
-Route::get('/', function() {
-    return 'welcome to the spa!';
-});
 
 Route::post('/users', [UserController::class, 'store']);
 
@@ -53,13 +52,33 @@ Route::middleware('auth:sanctum')->group( function () {
     
     Route::middleware('check.user')->group( function () {
 
-       
+        /**
+         * 
+         * Interval Routes
+         * 
+         */
+
+        Route::post('/users/{user}/images', [ProfilePhotoController::class, 'update']);
+
         Route::get('/users/{user}/intervals', [IntervalController::class, 'index']);
         Route::post('/users/{user}/intervals', [IntervalController::class, 'store']);
 
         Route::get('/users/{user}/intervals/{interval}',[IntervalController::class, 'show']);
         Route::put('/users/{user}/intervals/{interval}', [IntervalController::class, 'update']);
         Route::delete('users/{user}/intervals/{interval}', [IntervalController::class, 'destroy']);
+
+        /**
+         * 
+         * Session Route
+         * 
+         */
+
+        Route::get('/users/{user}/sessions', [SessionController::class, 'index']);
+        Route::post('/users/{user}/sessions', [SessionController::class, 'store']);
+
+        Route::get('/users/{user}/sessions/{session}',[SessionController::class, 'show']);
+        Route::put('/users/{user}/sessions/{session}', [SessionController::class, 'update']);
+        Route::delete('users/{user}/sessions/{session}', [SessionController::class, 'destroy']);
 
     });
 

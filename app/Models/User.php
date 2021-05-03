@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Http\Request;
 
+use App\Models\Session;
+use App\Models\Interval;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasApiTokens, SoftDeletes;
@@ -28,7 +31,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'birth_date',
         'age',
         'height',
-        'weight'
+        'weight',
+        'profile_picture',
+        'status'
     ];
 
     /**
@@ -57,6 +62,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function intervals()
     {
         return $this->hasMany(Interval::class);
+    }
+
+    public function sessoions()
+    {
+        return $this->hasMany(Session::class);
     }
 
     public function validateNewUser(Request $request)
