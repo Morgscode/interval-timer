@@ -16,17 +16,6 @@ class ProfilePhotoController extends Controller
             'profile_picture' => 'required|file|max:5000|mimes:jpg,png,gif,jpeg,webp'
         ]);
 
-        $user = User::where('id', $user_id)->firstOrFail();
-
-        if ($user->profile_picture) {
-
-            Storage::delete($user->profile_picture);
-
-            $user->profile_picture = null;
-
-            $user->save();
-        }
-
         // lets find out how big our profile image is
         $image_size = getimagesize($request->profile_picture);
 
@@ -44,9 +33,19 @@ class ProfilePhotoController extends Controller
             ];
 
         }
+
+        $user = User::where('id', $user_id)->firstOrFail();
+
+        // if we already have a profile picture in storage, let's delete it
+        if ($user->profile_picture) {
+
+            Storage::delete('/public/' . $user->profile_picture);
+
+        }
  
         $path = $request->file('profile_picture')->store('profile-pictures', 'public');
 
+        // lets update the path to the profile picture
         $user->profile_picture = $path;
 
         $user->save();

@@ -1,17 +1,17 @@
 <section class="user-profile">
-    <header class="brounded shadow-lg bg-white shadow-sm sm:rounded-lg flex flex-col md:flex-row md:items-center p-3 md:p-6 mb-6">
-        <div class="profile-photo--wrapper w-full md:w-1/2 mb-3 md:mb-0 flex flex-col justify-center items-center">
+    <header class="brounded shadow-lg bg-white sm:rounded-lg flex flex-col md:flex-row md:items-center p-3 md:p-6 mb-6">
+        <div class="profile-photo--wrapper w-full sm:w-2/5 mb-3 md:mb-0 flex flex-col justify-center items-center">
             @if ( $user->profile_picture )
-                <img src="{{ asset( 'storage/'.$user->profile_picture ) }}" class="w-full md:w-2/3 brounded shadow-lg shadow-sm" />
+                <img src="{{ asset( 'storage/'.$user->profile_picture ) }}" class="w-2/3 rounded-full shadow-lg" />
             @else 
-                <img src="{{ asset('/assets/img/user.svg') }}" class="w-1/2 mb-3" />
+                <img src="{{ asset('/assets/img/user.svg') }}" class="w-1/2" />
             @endif
         </div>
-        <h1 class="text-4xl w-full md:w-1/2">Welcome back{{ $user->name ? ' '.$user->name : '!' }}</h1>
+        <h1 class="text-4xl w-full text-center sm:w-3/5">Welcome back{{ $user->name ? ' '.$user->name : '!' }}</h1>
     </header>
     <article class="mb-6">
         <h1 class="text-3xl mb-6 text-gray-500">Update your user profile</h1>
-        <form action="/users/{{ $user->id }}" method="POST" class="form w-full flex flex-wrap p-3 md:p-6 rounded shadow-lg bg-white shadow-sm sm:rounded-lg">
+        <form action="/users/{{ $user->id }}" method="POST" class="form w-full flex flex-wrap p-3 md:p-6 rounded shadow-lg bg-white sm:rounded-lg">
             @csrf 
             @method('PUT')
             <div class="form-field w-full md:w-1/2 inline-flex flex-col py-3 mb-3 md:mb-6 mx-0">
